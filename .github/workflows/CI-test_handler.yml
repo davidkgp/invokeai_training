@@ -41,7 +41,13 @@ jobs:
 
     steps:
       - uses: actions/checkout@v3
-
+      - name: Run Tests
+        uses: runpod/runpod-test-runner@v1
+        with:
+          image-tag: [ tag of image to test ]
+          runpod-api-key: [ a valid Runpod API key ]
+          test-filename: [ path for a json file containing a list of tests, defaults to .github/tests.json ]
+          request-timeout: [ number of seconds to wait on each request before timing out, defaults to 300 ]
       - name: Set up Python 3.11 & install dependencies
         uses: actions/setup-python@v4
         with:
