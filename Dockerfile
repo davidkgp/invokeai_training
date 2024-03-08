@@ -1,17 +1,20 @@
-# Include Python
-FROM python:3.10-alpine
+FROM runpod/pytorch:3.10-2.0.0-117
 
 # Label your image with metadata
 LABEL maintainer="davidkgp@gmail.com"
 LABEL org.opencontainers.image.source https://github.com/davidkgp/invokeai_training
 LABEL org.opencontainers.image.description "Runpod custom worker for invokeai training"
 
-# Define your working directory
-WORKDIR /
+SHELL ["/bin/bash", "-c"]
 
-RUN apt-get update && apt-get install -y \
-    git \
-    wget
+WORKDIR /workspace
+
+# Install missing dependencies
+RUN apt-get update && \
+    apt-get install -y --no-install-recommends apt-utils zstd python3.10-venv git-lfs unzip && \
+    apt clean && rm -rf /var/lib/apt/lists/* && \
+    echo "en_US.UTF-8 UTF-8" > /etc/locale.gen && \
+    curl -s https://packagecloud.io/install/repositories/github/git-lfs/script.deb.sh | bash
 
 COPY builder/requirements.txt /requirements.txt
 RUN pip install --upgrade pip && \
