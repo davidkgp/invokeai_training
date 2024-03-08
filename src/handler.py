@@ -12,7 +12,7 @@ def handler(job):
 
     name = job_input.get('name', 'Start training!')
 
-    return f"Hello, {name}!"
+    return f"Hello, start training {name}!"
 
 
 runpod.serverless.start({"handler": handler})
