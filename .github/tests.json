@@ -8,7 +8,7 @@
     "input": {
       "name": "Dolly"
     },
-    "expectedOutput": "Hello, Dolly!"
+    "expectedOutput": "Hello, start training Dolly!"
   },
   {
     "hardwareConfig": {
