@@ -1,29 +1,27 @@
-# Base image -> https://github.com/runpod/containers/blob/main/official-templates/base/Dockerfile
-# DockerHub -> https://hub.docker.com/r/runpod/base/tags
-FROM runpod/base:0.4.0-cuda11.8.0
+# Include Python
+FROM python:3.10-alpine
 
-# The base image comes with many system dependencies pre-installed to help you get started quickly.
-# Please refer to the base image's Dockerfile for more information before adding additional dependencies.
-# IMPORTANT: The base image overrides the default huggingface cache location.
+# Label your image with metadata
+LABEL maintainer="davidkgp@gmail.com"
+LABEL org.opencontainers.image.source https://github.com/davidkgp/invokeai_training
+LABEL org.opencontainers.image.description "Runpod custom worker for invokeai training"
 
+# Define your working directory
+WORKDIR /
 
-# --- Optional: System dependencies ---
-# COPY builder/setup.sh /setup.sh
-# RUN /bin/bash /setup.sh && \
-#     rm /setup.sh
-
-
-# Python dependencies
 COPY builder/requirements.txt /requirements.txt
-RUN python3.11 -m pip install --upgrade pip && \
-    python3.11 -m pip install --upgrade -r /requirements.txt --no-cache-dir && \
+RUN pip install --upgrade pip && \
+    pip install -r /requirements.txt && \
     rm /requirements.txt
 
-# NOTE: The base image comes with multiple Python versions pre-installed.
-#       It is reccommended to specify the version of Python when running your code.
-
+RUN git clone https://github.com/invoke-ai/invoke-training.git && \
+    cd invoke-training && \
+    python -m venv invoketraining && \
+    source invoketraining/bin/activate && \
+    python -m pip install --upgrade pip && \
+    pip install ".[test]" --extra-index-url https://download.pytorch.org/whl/cu121
 
 # Add src files (Worker Template)
 ADD src .
 
-CMD python3.11 -u /handler.py
+CMD [ "python", "-u", "/rp_handler.py" ]
