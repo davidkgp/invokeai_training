@@ -9,6 +9,10 @@ LABEL org.opencontainers.image.description "Runpod custom worker for invokeai tr
 # Define your working directory
 WORKDIR /
 
+RUN apt-get update && apt-get install -y \
+    git \
+    wget
+
 COPY builder/requirements.txt /requirements.txt
 RUN pip install --upgrade pip && \
     pip install -r /requirements.txt && \
