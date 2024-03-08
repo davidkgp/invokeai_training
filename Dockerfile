@@ -27,4 +27,4 @@ RUN git clone https://github.com/invoke-ai/invoke-training.git && \
 # Add src files (Worker Template)
 ADD src .
 
-CMD ["python", "-u", "/handler.py","--rp_serve_api","--rp_api_host=0.0.0.0"]
+CMD ["python", "-u", "./handler.py","--rp_serve_api","--rp_api_host=0.0.0.0"]
