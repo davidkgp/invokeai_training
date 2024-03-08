@@ -6,6 +6,7 @@
       }
     },
     "input": {
+
       "name": "Dolly"
     },
     "expectedOutput": "Hello, start training Dolly!"
