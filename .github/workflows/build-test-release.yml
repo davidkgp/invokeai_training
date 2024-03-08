@@ -25,8 +25,15 @@ jobs:
         with:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
+
+      - name: Determine Docker tag
+        id: docker-tag
+        run: |
+          echo "DOCKER_TAG=${{ github.sha }}" >> $GITHUB_ENV
       - name: Build and push
         uses: docker/build-push-action@v4
         with:
           push: true
-          tags: ${{ secrets.DOCKERHUB_REPO }}/${{ secrets.DOCKERHUB_IMG }}:dev
+          tags: |
+            ${{ secrets.DOCKERHUB_REPO }}/${{ vars.DOCKERHUB_IMG }}:${{ env.DOCKER_TAG }}
+            ${{ secrets.DOCKERHUB_REPO }}/${{ vars.DOCKERHUB_IMG }}:latest
