@@ -1,5 +1,4 @@
-#FROM runpod/pytorch:3.10-2.0.0-117
-FROM python:3.10-alpine
+FROM runpod/pytorch:3.10-2.0.0-117
 
 # Label your image with metadata
 LABEL maintainer="davidkgp@gmail.com"
