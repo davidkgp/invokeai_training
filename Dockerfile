@@ -24,4 +24,7 @@ RUN git clone https://github.com/invoke-ai/invoke-training.git && \
     cd invoke-training && \
     python -m venv invoketraining
 
+# Add src files (Worker Template)
+ADD src .
+
 CMD [ "python", "-u", "/rp_handler.py" ]
