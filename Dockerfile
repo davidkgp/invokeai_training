@@ -28,4 +28,4 @@ RUN git clone https://github.com/invoke-ai/invoke-training.git && \
 # Add src files (Worker Template)
 ADD src .
 
-CMD ["jupyter", "notebook","--allow-root","--no-browser", "--port=8899"]
+CMD ["jupyter", "notebook","--allow-root","--no-browser", "--port=8899", "--ip=*", "--ServerApp.terminado_settings='{\"shell_command\":[\"/bin/bash\"]}'", "--ServerApp.allow_origin=*"]
