@@ -28,4 +28,4 @@ RUN git clone https://github.com/invoke-ai/invoke-training.git && \
 # Add src files (Worker Template)
 ADD src .
 
-CMD ["jupyter", "notebook"]
+CMD ["jupyter", "notebook","--allow-root"]
