@@ -18,7 +18,8 @@ RUN apt-get update && \
 COPY builder/requirements.txt /requirements.txt
 RUN pip install --upgrade pip && \
     pip install -r /requirements.txt && \
-    rm /requirements.txt
+    rm /requirements.txt && \
+    pip install jupyter notebook
 
 RUN git clone https://github.com/invoke-ai/invoke-training.git && \
     cd invoke-training && \
@@ -27,4 +28,4 @@ RUN git clone https://github.com/invoke-ai/invoke-training.git && \
 # Add src files (Worker Template)
 ADD src .
 
-CMD ["python", "-u", "./handler.py","--rp_serve_api","--rp_api_host=0.0.0.0"]
+CMD ["jupyter", "notebook"]
