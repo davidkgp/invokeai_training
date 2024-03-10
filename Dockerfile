@@ -21,11 +21,14 @@ RUN pip install --upgrade pip && \
     rm /requirements.txt && \
     pip install jupyter notebook
 
-RUN git clone https://github.com/invoke-ai/invoke-training.git && \
+RUN cd /workspace && git clone https://github.com/invoke-ai/invoke-training.git && \
     cd invoke-training && \
     python -m venv invoketraining
 
 # Add src files (Worker Template)
 ADD src .
 
-CMD ["jupyter", "notebook","--allow-root","--no-browser", "--port=8899", "--ip=*", "--ServerApp.terminado_settings='{\"shell_command\":[\"/bin/bash\"]}'", "--ServerApp.allow_origin=*"]
+CMD ["jupyter", "notebook","--allow-root","--no-browser"
+, "--port=8899", "--ip=*"
+, "--ServerApp.terminado_settings='{\"shell_command\":[\"/bin/bash\"]}'"
+, "--ServerApp.allow_origin=*","--NotebookApp.token=''","--NotebookApp.password=''"]
