@@ -24,9 +24,7 @@ RUN pip install --upgrade pip && \
 RUN cd /workspace && git clone https://github.com/invoke-ai/invoke-training.git && \
     cd invoke-training && \
     python -m venv invoketraining && \
-    source invoketraining/bin/activate && \
-    python -m pip install --upgrade pip && \
-    pip install ".[test]" --extra-index-url https://download.pytorch.org/whl/cu121
+    source invoketraining/bin/activate
 
 # Add src files (Worker Template)
 ADD src .
