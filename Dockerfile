@@ -19,7 +19,7 @@ COPY builder/requirements.txt /requirements.txt
 RUN pip install --upgrade pip && \
     pip install -r /requirements.txt && \
     rm /requirements.txt && \
-    pip install jupyter notebook
+    pip install jupyterlab
 
 RUN cd /workspace && git clone https://github.com/invoke-ai/invoke-training.git && \
     cd invoke-training && \
