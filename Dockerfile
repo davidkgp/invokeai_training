@@ -10,23 +10,22 @@ SHELL ["/bin/bash", "-c"]
 WORKDIR /workspace
 
 # Install missing dependencies
-RUN apt-get update && \
-    apt-get install -y --no-install-recommends apt-utils git wget && \
-    apt clean && rm -rf /var/lib/apt/lists/* && \
+RUN apt-get update -y && \
+    apt-get install -y --no-install-recommends apt-utils git wget bash && \
+    apt-get autoremove -y && apt-get clean -y && rm -rf /var/lib/apt/lists/* && \
     echo "en_US.UTF-8 UTF-8" > /etc/locale.gen | bash
 
 COPY builder/requirements.txt /requirements.txt
 RUN pip install --upgrade pip && \
     pip install -r /requirements.txt && \
     rm /requirements.txt && \
-    pip install jupyterlab
+    pip install jupyterlab && \
+    echo 'export PATH="$HOME/.local/bin:$HOME/.local/bin/jupyter-lab:$PATH"' >> ~/.bashrc
 
 RUN cd /workspace && git clone https://github.com/invoke-ai/invoke-training.git && \
     cd invoke-training && \
     python -m venv invoketraining && \
     source invoketraining/bin/activate
 
-# Add src files (Worker Template)
-ADD src .
-
-CMD ["jupyter", "lab","--allow-root","--no-browser", "--port=8899", "--ServerApp.allow_origin=*","--NotebookApp.token=''","--NotebookApp.password=''"]
+ADD builder/start.sh /start.sh
+CMD [ "/start.sh" ]
