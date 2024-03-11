@@ -7,7 +7,14 @@ LABEL org.opencontainers.image.description "Runpod custom worker for invokeai tr
 
 SHELL ["/bin/bash", "-c"]
 
+ENV SHELL=/bin/bash
+
 WORKDIR /workspace
+
+# Loosen up /workspace perms
+RUN chmod a+rw /workspace && \
+     useradd -ms /bin/bash disco
+USER disco
 
 # Install missing dependencies
 RUN apt-get update -y && \
