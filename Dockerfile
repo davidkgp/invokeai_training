@@ -13,8 +13,8 @@ WORKDIR /workspace
 
 # Loosen up /workspace perms
 RUN chmod a+rw /workspace && \
-     useradd -ms /bin/bash disco
-USER disco
+     useradd -ms /bin/bash invokeai
+USER invokeai
 
 # Install missing dependencies
 RUN apt-get update -y && \
@@ -35,4 +35,5 @@ RUN cd /workspace && git clone https://github.com/invoke-ai/invoke-training.git 
     source invoketraining/bin/activate
 
 ADD builder/start.sh /start.sh
+RUN chmod +x /start.sh
 CMD [ "/start.sh" ]
