@@ -12,9 +12,7 @@ ENV SHELL=/bin/bash
 WORKDIR /workspace
 
 # Loosen up /workspace perms
-RUN chmod a+rw /workspace && \
-     useradd -ms /bin/bash invokeai
-USER invokeai
+RUN chmod a+rw /workspace
 
 # Install missing dependencies
 RUN apt-get update -y && \
