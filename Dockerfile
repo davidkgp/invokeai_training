@@ -29,8 +29,7 @@ RUN pip install --upgrade pip && \
 
 RUN cd /workspace && git clone https://github.com/invoke-ai/invoke-training.git && \
     cd invoke-training && \
-    python -m venv invoketraining && \
-    source invoketraining/bin/activate
+    python -m venv invoketraining
 
 ADD builder/start.sh /start.sh
 RUN chmod +x /start.sh
