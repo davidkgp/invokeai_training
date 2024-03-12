@@ -6,16 +6,13 @@ LABEL org.opencontainers.image.source https://github.com/davidkgp/invokeai_train
 LABEL org.opencontainers.image.description "Runpod custom worker for invokeai training"
 
 SHELL ["/bin/bash", "-c"]
-
 ENV SHELL=/bin/bash
 
 WORKDIR /workspace
 
-# Loosen up /workspace perms
-RUN chmod a+rw /workspace
-
 # Install missing dependencies
-RUN apt-get update -y && \
+RUN chmod a+rw /workspace && \
+    apt-get update -y && \
     apt-get install -y --no-install-recommends apt-utils git wget bash && \
     apt-get autoremove -y && apt-get clean -y && rm -rf /var/lib/apt/lists/* && \
     echo "en_US.UTF-8 UTF-8" > /etc/locale.gen | bash
@@ -26,7 +23,8 @@ RUN pip install --upgrade pip && \
     rm /requirements.txt && \
     pip install jupyterlab && \
     echo 'export PATH="$HOME/.local/bin:$HOME/.local/bin/jupyter-lab:$PATH"' >> ~/.bashrc && \
-    cd /workspace && git clone https://github.com/invoke-ai/invoke-training.git && \
+    cd /workspace && \
+    git clone https://github.com/invoke-ai/invoke-training.git && \
     cd invoke-training && \
     python -m venv invoketraining
 
