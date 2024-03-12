@@ -25,9 +25,8 @@ RUN pip install --upgrade pip && \
     pip install -r /requirements.txt && \
     rm /requirements.txt && \
     pip install jupyterlab && \
-    echo 'export PATH="$HOME/.local/bin:$HOME/.local/bin/jupyter-lab:$PATH"' >> ~/.bashrc
-
-RUN cd /workspace && git clone https://github.com/invoke-ai/invoke-training.git && \
+    echo 'export PATH="$HOME/.local/bin:$HOME/.local/bin/jupyter-lab:$PATH"' >> ~/.bashrc && \
+    cd /workspace && git clone https://github.com/invoke-ai/invoke-training.git && \
     cd invoke-training && \
     python -m venv invoketraining
 
